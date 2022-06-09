@@ -9,7 +9,7 @@ def Email(status,emailUser){
             <meta charset="UTF-8"> 
             </head> 
             <body leftmargin="8" marginwidth="0" topmargin="8" marginheight="4" offset="0"> 
-                <img src="http://192.168.1.200:8080/static/0eef74bf/images/headshot.png">
+                <img src="https://raw.githubusercontent.com/pipiguai0123/JenkinsShareLibrary/main/docs/Jenkins%E6%9E%84%E5%BB%BA%E5%B7%A5%E5%85%B7%E9%9B%86%E6%88%90.png">
                 <table width="95%" cellpadding="0" cellspacing="0" style="font-size: 11pt; font-family: Tahoma, Arial, Helvetica, sans-serif">   
                     <tr> 
                         <td><br /> 
