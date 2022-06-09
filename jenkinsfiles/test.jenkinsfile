@@ -1,0 +1,79 @@
+#!groovy
+
+@Library('jenkinslibrary@main') _
+
+//func from shareibrary
+def toemail = new org.devops.toemail()
+userEmail = "1962821461@qq.com"
+pipeline{
+    agent { label 'master' }
+    
+    
+    stages{
+            stage('克隆代码') {
+                steps {
+                    sh "cd /var/lib/jenkins/workspace/test-web && rm -rf ./*"
+                    git branch: 'main', credentialsId: '81fe0c81-01bd-4d7e-8e08-a5d22d8fd6a9', url: 'ssh://git@192.168.31.194:2222/root/web.git'
+              }
+            }
+            stage('打包项目') {
+                steps {
+                    sh "tar -acvf web.tar.gz ./* "
+                    
+                }
+            }
+            stage('关闭服务') {
+                steps {
+                    sh 'ssh root@192.168.94.155 "/bin/bash /usr/local/tomcat/bin/shutdown.sh && rm -rf /app/html/www/*"'    
+                }
+            }
+            stage('代码部署') {
+                steps {
+                    sh 'scp web.tar.gz 192.168.94.155:/app/html/www'
+                    sh 'ssh root@192.168.94.155 "tar -xnf /app/html/www/web.tar.gz  -C /app/html/www/ && ls -l /app/html/www"'  
+                }
+            }
+            stage('开启服务') {
+                steps {
+                    sh 'ssh root@192.168.94.155 "/usr/local/tomcat/bin/startup.sh"'
+                    
+                }
+            }
+        }
+
+    post {
+        always{
+            script{
+                println("always")
+            }
+        }
+        
+        success{
+            script{
+                println("success")
+                
+                toemail.Email("流水线成功！",userEmail)
+            
+            }
+        
+        }
+        failure{
+            script{
+                println("failure")
+                
+                toemail.Email("流水线失败了！",userEmail)
+            }
+        }
+        
+        aborted{
+            script{
+                println("aborted")
+               toemail.Email("流水线被取消了！",userEmail)
+            }
+        
+        }
+    
+    }
+    
+    
+}
