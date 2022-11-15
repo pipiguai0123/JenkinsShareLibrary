@@ -1,4 +1,3 @@
-
 @Library("jenkinslibrary@main") _
 
 def jenkinsapi = new org.devops.jenkinsapi()
@@ -8,7 +7,8 @@ String manageOpts = "${env.manageOpts}"
 
 pipeline {
     
-    agent { node {label "master"}}
+    //agent { node {label "master"}}
+    agent { any }
     
     stages{
         stage("test"){
