@@ -1,5 +1,5 @@
 
-@Library("jenkinslibrary@master") _
+@Library("jenkinslibrary@main") _
 
 def jenkinsapi = new org.devops.jenkinsapi()
 
